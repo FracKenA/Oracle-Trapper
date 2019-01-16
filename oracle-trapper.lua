@@ -1,6 +1,6 @@
 require(“socket”)
 
-function getHostNaMeOfAddress(ipaddress)
+function getHostNameOfAddress(ipaddress)
 
    local https = require(“ssl.https”)
    op5server = "localhost"
@@ -31,12 +31,12 @@ function encodeURI(str)
 
 function createServiceIfNotExist(hostname,service)
 	-- body
-
 	hostname = encodeURI(hostname)
 	service = encodeURI(service)
 
 	url = "https://172.27.105.54/api/status/service/"..hostname..";"+service+""
-	--replace " " with "%20"
+	
+	--if 404 create and save config
 end
 
 log ("Trap OID " .. trap.oid)
@@ -45,12 +45,12 @@ result.notify = NOTIFY.ALWAYS
 trapType = trap.fields['.1.3.6.1.4.1.111.15.3.1.1.12.1']
 
 if trapType = "Availability" then
-	ipaddress = trap.fields['.1.3.6.1.4.1.111.15.3.1.1.24.1']
+    ipaddress = trap.fields['.1.3.6.1.4.1.111.15.3.1.1.24.1']
     state = trap.fields['.1.3.6.1.4.1.111.15.3.1.1.52.1']
     
     result.message = trap.fields ['.1.3.6.1.4.1.111.15.3.1.1.46.1']
     typeOfDevice = ["1.3.6.1.4.1.111.15.3.1.1.23.1"]
-    --result.host = getHostNaMeOfAddress(ipaddress)
+    --result.host = getHostNameOfAddress(ipaddress)
     result.host = "Test Host"
 
     if string.match(typeOfDevice, "Database") then
